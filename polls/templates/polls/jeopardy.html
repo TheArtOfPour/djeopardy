@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <title>Jeopardy Game</title>
+    <script>
+        function displayQuestion(categoryId, questionId, questionText) {
+            console.log("Category ID: " + categoryId + ", Question ID: " + questionId);
+            let questionButton = document.getElementById(categoryId + "-" + questionId);
+            questionButton.disabled = true;
+            questionButton.innerHTML = "";
+            var questionDisplay = document.getElementById("question-display");
+            questionDisplay.style.display = "block";
+            questionDisplay.innerHTML = "<div class='big-question'>" + questionText + "</div>";
+        }
+        function hideQuestion() {
+            var questionDisplay = document.getElementById("question-display");
+            questionDisplay.style.display = "none";
+            questionDisplay.innerHTML = "";
+        }
+    </script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        .board {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: row;
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .category {
+            font-size: 20px;
+            width: 100px;
+            height: 100px;
+            font-weight: bold;
+            background-color: rgb(9, 9, 147);
+            color: white;
+            border: solid white 1px;
+            text-align: center;
+            justify-content: center;
+            display: flex;
+            align-items: center;
+        }
+
+        .question {
+            padding: 20px;
+            font-size: 20px;
+            background-color: rgb(9, 9, 147);
+            color: white;
+            font-weight: bold;
+            border: solid white 1px;
+            width: 100px;
+            height: 100px;
+        }
+
+        #question-display {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(9, 9, 147);
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-shadow: 2px 2px 4px #000000;
+        }
+
+        .big-question {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 64px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="board">
+    {% for category in categories %}
+        <div class="category-list">
+            <button class="category">{{ category.name }}</button>
+            <button onclick="displayQuestion({{category.id}}, 1, '{{category.question1}}')" id="{{category.id}}-1" class="question">$200</button>
+            <button onclick="displayQuestion({{category.id}}, 2, '{{category.question2}}')" id="{{category.id}}-2" class="question">$400</button>
+            <button onclick="displayQuestion({{category.id}}, 3, '{{category.question3}}')" id="{{category.id}}-3" class="question">$600</button>
+            <button onclick="displayQuestion({{category.id}}, 4, '{{category.question4}}')" id="{{category.id}}-4" class="question">$800</button>
+            <button onclick="displayQuestion({{category.id}}, 5, '{{category.question5}}')" id="{{category.id}}-5" class="question">$1000</button>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div id="question-display" style="display:none;" onclick="hideQuestion()"></div>
+
+</body>
+
+</html>
